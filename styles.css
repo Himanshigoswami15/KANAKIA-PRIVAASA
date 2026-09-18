@@ -643,6 +643,10 @@ h1, h2, h3, h4, h5, h6 {
   animation: dreamlandSlideInLeft 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s both;
 }
 
+.slide-item.active .prop-rera {
+  animation: dreamlandSlideInLeft 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s both;
+}
+
 .slide-item.active .prop-tagline {
   animation: dreamlandPopIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both;
 }
@@ -713,7 +717,27 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   letter-spacing: 1px;
   color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 8px;
+}
+
+.prop-rera {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-family: var(--font-montserrat);
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
   margin-bottom: 12px;
+}
+
+.prop-rera i {
+  color: #4ade80;
 }
 
 .prop-tagline {
@@ -1729,9 +1753,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .footer-rera {
-  color: var(--theme-color);
-  font-size: 13px;
-  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #e2e8f0;
+  font-size: 13.5px;
+  margin: 10px auto 18px auto;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.footer-rera i {
+  color: #4ade80;
+}
+
+.footer-rera strong {
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .footer-disclaimer {
