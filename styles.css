@@ -1,15 +1,15 @@
 /* ==========================================================================
    DREAM LAND - SINGLE PROPERTY REAL ESTATE TEMPLATE (EXACT AS-IS REPLICA)
-   Theme Color: #71b100 (Lime Green) & Dark Slate #20272b
+   Theme Color: #18392B (Forest Green) & Dark Slate #20272b
    Typography: Montserrat & Roboto & Open Sans
    ========================================================================== */
 
 :root {
-  --theme-color: #71b100;
-  --theme-hover: #5f9600;
-  --theme-dark: #4f7d00;
-  --theme-light: rgba(113, 177, 0, 0.12);
-  --theme-translucent: rgba(113, 177, 0, 0.88);
+  --theme-color: #18392B;
+  --theme-hover: #224f3c;
+  --theme-dark: #122c21;
+  --theme-light: rgba(24, 57, 43, 0.12);
+  --theme-translucent: rgba(24, 57, 43, 0.88);
 
   --dark-header: #20272b;
   --dark-bg: #181f23;
@@ -829,7 +829,7 @@ h1, h2, h3, h4, h5, h6 {
 .counter-column .inner-box:hover {
   border-color: var(--theme-color);
   transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(113, 177, 0, 0.15);
+  box-shadow: 0 10px 25px rgba(24, 57, 43, 0.15);
 }
 
 .counter-column .icon {
@@ -1158,7 +1158,7 @@ h1, h2, h3, h4, h5, h6 {
 .spec-row.full-width {
   grid-column: span 2;
   background: var(--theme-light);
-  border-color: rgba(113, 177, 0, 0.3);
+  border-color: rgba(24, 57, 43, 0.3);
 }
 
 .spec-row .lbl {
@@ -1308,7 +1308,7 @@ h1, h2, h3, h4, h5, h6 {
 .zoom-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(113, 177, 0, 0.85);
+  background: rgba(24, 57, 43, 0.85);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1641,7 +1641,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--theme-color);
   border-color: var(--theme-color);
   color: #ffffff;
-  box-shadow: 0 2px 6px rgba(113, 177, 0, 0.35);
+  box-shadow: 0 2px 6px rgba(24, 57, 43, 0.35);
 }
 
 .form-legal-consent {
