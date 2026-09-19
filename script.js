@@ -575,4 +575,74 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     runCounterAnimation();
   }
+
+  // ==========================================================================
+  // 9. Landmark Projects Interactivity (Filters, Sub-Option Tabs & Lightbox)
+  // ==========================================================================
+  const projFilterBtns = document.querySelectorAll('.proj-filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  // Filter between All, Beverly Heights, and Paris
+  if (projFilterBtns.length > 0) {
+    projFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        projFilterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.getAttribute('data-proj-filter');
+        projectCards.forEach(card => {
+          const cardProj = card.getAttribute('data-project');
+          if (filter === 'all' || filter === cardProj) {
+            card.style.display = 'block';
+            card.style.animation = 'fadeIn 0.4s ease';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  // Sub-option Tabs within each project card
+  const projOptBtns = document.querySelectorAll('.proj-opt-btn');
+  projOptBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.project-card');
+      if (!card) return;
+
+      const targetId = btn.getAttribute('data-target');
+      const targetPanel = card.querySelector(`#${targetId}`);
+
+      // Deactivate other tabs in this card
+      const siblingBtns = card.querySelectorAll('.proj-opt-btn');
+      siblingBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Deactivate other panels in this card
+      const siblingPanels = card.querySelectorAll('.proj-panel');
+      siblingPanels.forEach(p => p.classList.remove('active'));
+
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+      }
+    });
+  });
+
+  // Lightbox trigger for project floor plans and gallery items
+  const projLightboxTriggers = document.querySelectorAll('.proj-lightbox-trigger');
+  projLightboxTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const imgSrc = trigger.getAttribute('data-img');
+      const titleText = trigger.getAttribute('data-title') || 'Kanakia Project Details';
+
+      if (imgSrc && lightboxModal && lightboxImg) {
+        lightboxImg.src = imgSrc;
+        if (lightboxTitle) lightboxTitle.textContent = titleText;
+        lightboxModal.classList.add('open');
+        lightboxModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
 });
+
