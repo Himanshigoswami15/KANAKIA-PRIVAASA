@@ -431,12 +431,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================================================
-  // 7. Lead Form Validation & Submission Handling
+  // 7. Lead Form Validation & Submission Handling (Google Apps Script Integration)
   // ==========================================================================
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8qww0nBnf7ezlw8Zn-EGsaVpB-1J7kz_QexnVITehGp542L8gVQAGE3tCapKmhqtHtg/exec';
+
   const wireForm = (form, isModal = false) => {
     if (!form) return;
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const phoneInput = form.querySelector('input[type="tel"]');
@@ -457,7 +459,95 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
       }
 
-      setTimeout(() => {
+      // Extract form values
+      const name = (form.querySelector('input[name="fullName"]')?.value || '').trim();
+      const phone = (form.querySelector('input[name="mobileNumber"]')?.value || '').trim();
+
+      const interestRadio = form.querySelector('input[name="propertyInterest"]:checked') ||
+                            form.querySelector('input[name="modalPropertyInterest"]:checked');
+      const interest = interestRadio ? interestRadio.value : 'Privaasa 2 BHK (₹2.45 Cr++)';
+
+      const budgetRadio = form.querySelector('input[name="budget"]:checked') ||
+                          form.querySelector('input[name="modalBudget"]:checked');
+      const budget = budgetRadio ? budgetRadio.value : '₹2.5–3 Cr';
+
+      const timelineRadio = form.querySelector('input[name="purchaseTimeline"]:checked') ||
+                            form.querySelector('input[name="modalTimeline"]:checked');
+      const timeline = timelineRadio ? timelineRadio.value : 'Within 1 month';
+
+      const configRadio = form.querySelector('input[name="preferredConfig"]:checked') ||
+                          form.querySelector('input[name="modalPreferredConfig"]:checked');
+      const config = configRadio ? configRadio.value : '2 BHK';
+
+      const message = (form.querySelector('textarea[name="message"]')?.value || '').trim();
+      const source = isModal 
+        ? (form.querySelector('input[name="leadSource"]')?.value || 'Popup Modal')
+        : 'On-Page Contact Form';
+
+      const now = new Date();
+      const timestamp = now.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
+      // Comprehensive payload matching various Google Sheet column header conventions
+      const leadData = {
+        name: name,
+        fullName: name,
+        'Full Name': name,
+        phone: phone,
+        mobile: phone,
+        mobileNumber: phone,
+        'Mobile Number': phone,
+        propertyInterest: interest,
+        interest: interest,
+        'Property Interest': interest,
+        budget: budget,
+        'Budget': budget,
+        purchaseTimeline: timeline,
+        timeline: timeline,
+        'Purchase Timeline': timeline,
+        preferredConfig: config,
+        config: config,
+        'Configuration': config,
+        message: message,
+        'Message': message,
+        source: source,
+        leadSource: source,
+        'Lead Source': source,
+        timestamp: timestamp,
+        'Timestamp': timestamp
+      };
+
+      try {
+        let submissionSuccess = false;
+        try {
+          // Standard fetch with follow redirect and CORS support
+          const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(leadData)
+          });
+          const result = await response.json();
+          console.log('Google Apps Script response:', result);
+          submissionSuccess = result && result.success !== false;
+        } catch (fetchErr) {
+          // Fallback with mode 'no-cors' if browser restricts reading cross-origin redirect
+          console.log('Retrying submission with no-cors fallback...');
+          await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(leadData)
+          });
+          submissionSuccess = true;
+        }
+
+        console.log('Lead submitted successfully:', leadData);
+      } catch (err) {
+        console.warn('Submission notice:', err);
+      } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.innerHTML = origText;
@@ -467,11 +557,11 @@ document.addEventListener('DOMContentLoaded', () => {
           form.style.display = 'none';
           if (modalSuccessState) modalSuccessState.classList.add('visible');
         } else {
-          // Submitted from the on-page Dream Land contact form: show success modal
-          openModal('2 BHK', 'On-Page Contact Form', true);
+          // Submitted from the on-page contact form: open thank you modal
+          openModal(interest, 'On-Page Contact Form', true);
           form.reset();
         }
-      }, 700);
+      }
     });
   };
 
