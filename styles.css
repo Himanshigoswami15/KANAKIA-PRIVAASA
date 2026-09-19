@@ -2564,7 +2564,8 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   /* Radio Pill Buttons on Mobile */
-  .radio-pill-group.pill-grid-2 {
+  .radio-pill-group.pill-grid-2,
+  .radio-pill-group.pill-grid-3 {
     grid-template-columns: 1fr;
   }
 
