@@ -580,9 +580,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // 9. Landmark Projects Interactivity (Filters, Sub-Option Tabs & Lightbox)
   // ==========================================================================
   const projFilterBtns = document.querySelectorAll('.proj-filter-btn');
-  const projectCards = document.querySelectorAll('.project-card');
+  const projectCards = document.querySelectorAll('.project-card, .proj-clean-card');
 
-  // Filter between All, Beverly Heights, and Paris
+  // Filter between All, Beverly Heights, Paris, and Greenberg
   if (projFilterBtns.length > 0) {
     projFilterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -593,7 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
         projectCards.forEach(card => {
           const cardProj = card.getAttribute('data-project');
           if (filter === 'all' || filter === cardProj) {
-            card.style.display = 'block';
+            card.style.display = 'flex';
             card.style.animation = 'fadeIn 0.4s ease';
           } else {
             card.style.display = 'none';
